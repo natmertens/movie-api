@@ -1,0 +1,19 @@
+* {box-sizing: border-box;}
+
+h1, p {
+  text-align: center;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+table {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+td {
+  padding: 0 10px;
+  text-align: center;
+}
