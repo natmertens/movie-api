@@ -4,7 +4,10 @@
 
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Documentation</title>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 
 <body>
@@ -12,14 +15,199 @@
     <h1>MyFlix API</h1>
   </header>
 
-    <p>
+  <p>
       The objective of this project is to build the server-side component <br>
       of a movie web application that will let users access information about <br>
       different movies, directors, and genres. Users will also be able to sign <br>
       up, update their personal information, and create a list of their <br>
       favorite movies.
-    </p>
+  </p>
 
+  <table>
+
+    <tr>
+      <th>Business Logic</th>
+      <th>URL</th>
+      <th>HTTP Method</th>
+      <th>Request Body Data Format</th>
+      <th>Response Body Data Format</th>
+      <th>Example Request</th>
+      <th>Example Response</th>
+    </tr>
+
+    <tr>
+      <td>Return a list of all movies</td>
+      <td>/movies</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>A JSON object holding data about all the movies</td>
+      <td>/movies</td>
+      <td>
+        { <br>
+          "id": 1, <br>
+          "title": "Love Actually", <br>
+          "director": "Richard Curtis", <br>
+          "genre": "Drama, Comedy, Romance", <br>
+          "description": "The movie follows the stories of different people dealing
+          with their love lives" <br>
+          "imageURL": "love-actually.png", <br>
+          "isFeatured": "true" <br>
+        }
+      </td>
+    </tr>
+
+    <tr>
+      <td>Return data about a single movie by title</td>
+      <td>/movies/:title</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>
+        A JSON object holding data about a single movie, containing
+        ID, title, director, genre, description, image URL, whether it is
+        featured or not
+      </td>
+      <td>/movies/Love%20Actually</td>
+      <td>  { <br>
+          "id": 1, <br>
+          "title": "Love Actually", <br>
+          "director": "Richard Curtis", <br>
+          "genre": "Drama, Comedy, Romance", <br>
+          "description": "The movie follows the stories of different people dealing
+          with their love lives" <br>
+          "imageURL": "love-actually.png", <br>
+          "isFeatured": "true" <br>
+        }
+      </td>
+    </tr>
+
+    <tr>
+      <td>Return data about a genre by title</td>
+      <td>/movies/genres/:title</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>
+        A JSON object holding data about a movie genre, containing
+        the name and a description
+      </td>
+      <td>/movies/genres/comedy</td>
+      <td> { <br>
+          "name": "Romance", <br>
+          "description": "The romance genre tells stories about romantic relationships" <br>
+        }</td>
+    </tr>
+
+    <tr>
+      <td>Return data about a director by name</td>
+      <td>/movies/directors/:name</td>
+      <td>GET</td>
+      <td>None</td>
+      <td>
+        A JSON object holding data about a director, containing
+        name, bio, birth year, death year
+      </td>
+      <td>/movies/directors/Nora%20Ephron</td>
+      <td>
+        { <br>
+           "name": "Nora Ephron", <br>
+           "bio": "Nora Ephron was an American filmmaker who is best known <br>
+           for her romatic comedies", <br>
+           "birth year": 1941, <br>
+           "death year": 2012 <br>
+         }
+      </td>
+    </tr>
+
+    <tr>
+      <td>Allow new users to register</td>
+      <td>/users</td>
+      <td>POST</td>
+      <td>A JSON object holding data about the user to add</td>
+      <td>
+        A JSON object holding data about the user that was added, including an ID
+      </td>
+      <td>
+        { <br>
+          "username": "natmerten", <br>
+          "password": "123", <br>
+          "email": "nat@gmail.com" <br>
+        }
+      </td>
+      <td>
+        { <br>
+          "id": 1, <br>
+          "username": "natmertens", <br>
+          "password": "123", <br>
+          "email": "nat@gmail.com" <br>
+        }
+      </td>
+    </tr>
+
+    <tr>
+      <td>Allow users to update their user info</td>
+      <td>/movies/users/:username</td>
+      <td>PUT</td>
+      <td>None</td>
+      <td>
+        A text message indicating whether the user info was successfully updated
+      </td>
+      <td>/movies/users/natmertens</td>
+      <td>'User info was successfully updated'</td>
+    </tr>
+
+    <tr>
+      <td>Allow users to add a movie to their list of favorites</td>
+      <td>/users/:username/movies/:movieID</td>
+      <td>POST</td>
+      <td>A JSON object holding data about the movie to add</td>
+      <td>
+        A JSON object holding data about the movie that was added, including an ID
+      </td>
+      <td>{ <br>
+          "title": "Love Actually", <br>
+          "director": "Richard Curtis", <br>
+          "genre": "Drama, Comedy, Romance", <br>
+          "description": "The movie follows the stories of different people dealing
+          with their love lives" <br>
+          "imageURL": "love-actually.png", <br>
+          "isFeatured": "true" <br>
+        }</td>
+      <td>{ <br>
+          "id": 1, <br>
+          "title": "Love Actually", <br>
+          "director": "Richard Curtis", <br>
+          "genre": "Drama, Comedy, Romance", <br>
+          "description": "The movie follows the stories of different people dealing
+          with their love lives" <br>
+          "imageURL": "love-actually.png", <br>
+          "isFeatured": "true" <br>
+        }</td>
+    </tr>
+
+    <tr>
+      <td>Allow users to remove a movie from their list of favorites</td>
+      <td>/users/:username/movies/:movieID</td>
+      <td>DELETE</td>
+      <td>None</td>
+      <td>
+        A text message indicating whether the movie was successfully removed
+      </td>
+      <td>/users/natmertens/movies/1</td>
+      <td>'Movie was successfully removed'</td>
+    </tr>
+
+    <tr>
+      <td>Allow existing users to deregister</td>
+      <td>/users/:username</td>
+      <td>DELETE</td>
+      <td>None</td>
+      <td>
+        A text message indicating whether the user has successfully deregistered
+      </td>
+      <td>/users/natmertens</td>
+      <td>'You have successfully deregisterd'</td>
+    </tr>
+
+  </table>
 
 
 </body>
