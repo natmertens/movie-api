@@ -66,6 +66,38 @@ app.get('/', (req, res) => {
   res.send('Welcome to MyFlix!');
 })
 
+app.get('/movies/:title', (req, res) => {
+  res.send('Successful GET request returning data about a single movie by title');
+});
+
+app.get('/movies/genres/:title', (req, res) => {
+  res.send('Successful GET request returning data about a movie genre by title');
+});
+
+app.get('/movies/directors/:name', (req, res) => {
+  res.send('Successful GET request returning data about a director by name');
+});
+
+app.post('/users', (req, res) => {
+  res.send('Successful POST request allowing new users to register');
+});
+
+app.put('/users/:username', (req, res) => {
+  res.send('Successful PUT request allowing users to update their user info');
+});
+
+app.post('/users/:username/movies/:movieID', (req, res) => {
+  res.send('Successful POST request allowing users to add a movie to their list of favorites');
+});
+
+app.delete('/users/:username/movies/:movieID', (req, res) => {
+  res.send('Successful DELETE request allowing users to remove a movie from their list of favorites');
+});
+
+app.delete('/users/:username', (req, res) => {
+  res.send('Successful DELETE request allowing users to deregister');
+});
+
 app.use(express.static('public'));
 
 app.use((err, req, res, next) => {
@@ -73,6 +105,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-app.listen(8080, function() {
+app.listen(8080, () => {
   console.log('Your app is listening on port 8080.');
 });
