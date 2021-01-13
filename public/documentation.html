@@ -44,7 +44,6 @@
       <td>/movies</td>
       <td>
         { <br>
-          "id": 1, <br>
           "title": "Love Actually", <br>
           "director": "Richard Curtis", <br>
           "genre": "Drama, Comedy, Romance", <br>
@@ -63,12 +62,11 @@
       <td>None</td>
       <td>
         A JSON object holding data about a single movie, containing
-        ID, title, director, genre, description, image URL, whether it is
+        title, director, genre, description, image URL, whether it is
         featured or not
       </td>
       <td>/movies/Love%20Actually</td>
       <td>  { <br>
-          "id": 1, <br>
           "title": "Love Actually", <br>
           "director": "Richard Curtis", <br>
           "genre": "Drama, Comedy, Romance", <br>
@@ -111,8 +109,8 @@
            "name": "Nora Ephron", <br>
            "bio": "Nora Ephron was an American filmmaker who is best known <br>
            for her romatic comedies", <br>
-           "birth year": 1941, <br>
-           "death year": 2012 <br>
+           "birth year": "1941-05-19", <br>
+           "death year": "2012-6-26" <br>
          }
       </td>
     </tr>
@@ -123,7 +121,7 @@
       <td>POST</td>
       <td>A JSON object holding data about the user to add</td>
       <td>
-        A JSON object holding data about the user that was added, including an ID
+        A JSON object holding data about the user that was added
       </td>
       <td>
         { <br>
@@ -134,7 +132,6 @@
       </td>
       <td>
         { <br>
-          "id": 1, <br>
           "username": "natmertens", <br>
           "password": "123", <br>
           "email": "nat@gmail.com" <br>
@@ -160,7 +157,7 @@
       <td>POST</td>
       <td>A JSON object holding data about the movie to add</td>
       <td>
-        A JSON object holding data about the movie that was added, including an ID
+        A JSON object holding data about the movie that was added
       </td>
       <td>{ <br>
           "title": "Love Actually", <br>
@@ -172,7 +169,6 @@
           "isFeatured": "true" <br>
         }</td>
       <td>{ <br>
-          "id": 1, <br>
           "title": "Love Actually", <br>
           "director": "Richard Curtis", <br>
           "genre": "Drama, Comedy, Romance", <br>
