@@ -43,75 +43,89 @@
       <td>A JSON object holding data about all the movies</td>
       <td>/movies</td>
       <td>
-        { <br>
-          "Title": "Love Actually", <br>
-          "Director": "Richard Curtis", <br>
-          "Genre": "Romance", <br>
-          "Description": "The movie follows the stories of different people dealing
-          with their love lives", <br>
-          "ImagePath": "love-actually.png", <br>
-          "Featured": "true" <br>
-        }
+        [ <br>
+          {  <br>
+            "Genre": {  <br>
+              "Name": "Romance",  <br>
+              "Description": "The romance film genre deals with romantic love stories usually showing the journey of two people who fall for each other."  <br>
+            },  <br>
+            "Director": {  <br>
+              "Name": "Richard Curtis",  <br>
+              "Bio": "Richard Curtis is a British film director who is best known for his romantic comedy films.",  <br>
+              "Birth": "1956"  <br>
+            },  <br>
+            "_id": "6002bb75d1158f707e8e3418",  <br>
+            "Title": "Love Actually",  <br>
+            "Description": "The movie follows the stories of different people dealing with their love lives in London at Christmas time.",  <br>
+            "ImagePath": "love_actually.png",  <br>
+            "Featured": true  <br>
+          }, [other movies]  <br>
+        ]
       </td>
     </tr>
 
     <tr>
       <td>Return data about a single movie by title</td>
-      <td>/movies/:title</td>
+      <td>/movies/:Title</td>
       <td>GET</td>
       <td>None</td>
       <td>
-        A JSON object holding data about a single movie, containing
-        title, director, genre, description, image URL, whether it is
-        featured or not
+        A JSON object holding data about a single movie
       </td>
       <td>/movies/Love%20Actually</td>
-      <td>  { <br>
-          "Title": "Love Actually", <br>
-          "Director": "Richard Curtis", <br>
-          "Genre": "Romance", <br>
-          "Description": "The movie follows the stories of different people dealing
-          with their love lives", <br>
-          "ImagePath": "love-actually.png", <br>
-          "Featured": "true" <br>
+      <td>
+        {  <br>
+          "Genre": {  <br>
+            "Name": "Romance",  <br>
+            "Description": "The romance film genre deals with romantic love stories usually showing the journey of two people who fall for each other."  <br>
+          },  <br>
+          "Director": {  <br>
+            "Name": "Richard Curtis",  <br>
+            "Bio": "Richard Curtis is a British film director who is best known for his romantic comedy films.",  <br>
+            "Birth": "1956"  <br>
+          },  <br>
+          "_id": "6002bb75d1158f707e8e3418",  <br>
+          "Title": "Love Actually",  <br>
+          "Description": "The movie follows the stories of different people dealing with their love lives in London at Christmas time.",  <br>
+          "ImagePath": "love_actually.png",  <br>
+          "Featured": true <br>
         }
       </td>
     </tr>
 
     <tr>
       <td>Return data about a genre by title</td>
-      <td>/movies/genres/:title</td>
+      <td>/movies/genres/:Name</td>
       <td>GET</td>
       <td>None</td>
       <td>
-        A JSON object holding data about a movie genre, containing
-        the name and a description
+        A JSON object holding data about a movie genre
       </td>
-      <td>/movies/genres/romance</td>
-      <td> { <br>
-          "Title": "Romance", <br>
-          "Description": "The romance genre tells stories about romantic relationships" <br>
-        }</td>
+      <td>/movies/genres/Romance</td>
+      <td>
+        {  <br>
+          "Name": "Romance",  <br>
+          "Description": "The romance film genre deals with romantic love stories usually showing the journey of two people who fall for each other."  <br>
+        }
+      </td>
     </tr>
 
     <tr>
       <td>Return data about a director by name</td>
-      <td>/movies/directors/:name</td>
+      <td>/movies/directors/:Name</td>
       <td>GET</td>
       <td>None</td>
       <td>
-        A JSON object holding data about a director, containing
-        name, bio, birth year, death year
+        JSON object holding data about a director
       </td>
-      <td>/movies/directors/Nora%20Ephron</td>
+      <td>/movies/directors/Nancy%20Meyers</td>
       <td>
-        { <br>
-           "Name": "Nora Ephron", <br>
-           "Bio": "Nora Ephron was an American filmmaker who is best known <br>
-           for her romatic comedies", <br>
-           "Birth": "1941", <br>
-           "Death": "2012" <br>
-         }
+        {
+          "Name": "Nora Ephron",  <br>
+          "Bio": "Nora Ephron was an American writer, journalist and filmmaker and is famous for her romantic comedy films.",  <br>
+          "Birth": "1941",  <br>
+          "Death": "2012" <br>
+        }
       </td>
     </tr>
 
@@ -119,88 +133,113 @@
       <td>Allow new users to register</td>
       <td>/users</td>
       <td>POST</td>
-      <td>A JSON object holding data about the user to add</td>
-      <td>
-        A JSON object holding data about the user that was added
-      </td>
+      <td>JSON object holding data about the user to add</td>
+      <td>JSON object holding data about the user that was added</td>
       <td>
         { <br>
-          "Username": "natmertens", <br>
-          "Password": "123", <br>
-          "Email": "nat@gmail.com" <br>
+          "Username": "crocodile", <br>
+          "Password": "testi", <br>
+          "Email": "crocs@gmail.com", <br>
+          "Birthday": "2001-12-12" <br>
         }
       </td>
       <td>
         { <br>
-          "Username": "natmertens", <br>
-          "Password": "123", <br>
-          "Email": "nat@gmail.com" <br>
+          "FavoriteMovies": [], <br>
+          "_id": "600b1d196b5138008f8f3491", <br>
+          "Username": "crocodile", <br>
+          "Password": "testi", <br>
+          "Email": "crocs@gmail.com", <br>
+          "Birthday": "2001-12-12T00:00:00.000Z", <br>
+          "__v": 0 <br>
         }
+
       </td>
     </tr>
 
     <tr>
       <td>Allow users to update their user info</td>
-      <td>/movies/users/:username</td>
+      <td>/movies/users/:Username</td>
       <td>PUT</td>
-      <td>None</td>
+      <td>JSON object with updated info</td>
+      <td>JSON object with updated info</td>
       <td>
-        A text message indicating whether the user info was successfully updated
+        { <br>
+          "Username": "crocodile", <br>
+          "Password": "test123", <br>
+          "Email": "crocs@gmail.com", <br>
+          "Birthday": "2001-12-12" <br>
+        }
       </td>
-      <td>/movies/users/natmertens</td>
-      <td>'User info was successfully updated'</td>
+      <td>
+        { <br>
+          "FavoriteMovies": [], <br>
+          "_id": "600b1d196b5138008f8f3491", <br>
+          "Username": "crocodile", <br>
+          "Password": "test123", <br>
+          "Email": "crocs@gmail.com", <br>
+          "Birthday": "2001-12-12T00:00:00.000Z", <br>
+          "__v": 0 <br>
+        }
+      </td>
     </tr>
 
     <tr>
       <td>Allow users to add a movie to their list of favorites</td>
-      <td>/users/:username/movies/:movieID</td>
+      <td>/users/:Username/movies/:MovieID</td>
       <td>POST</td>
-      <td>A JSON object holding data about the movie to add</td>
+      <td>None</td>
       <td>
-        A JSON object holding data about the movie that was added
+        JSON object with updated user info
       </td>
-      <td>{ <br>
-          "Title": "Love Actually", <br>
-          "Director": "Richard Curtis", <br>
-          "Genre": "Romance", <br>
-          "Description": "The movie follows the stories of different people dealing
-          with their love lives" <br>
-          "ImagePath": "love-actually.png", <br>
-          "Featured": "true" <br>
-        }</td>
-      <td>{ <br>
-          "Title": "Love Actually", <br>
-          "Director": "Richard Curtis", <br>
-          "Genre": "Romance", <br>
-          "Description": "The movie follows the stories of different people dealing
-          with their love lives" <br>
-          "ImagePath": "love-actually.png", <br>
-          "Featured": "true" <br>
-        }</td>
+      <td>/users/crocodile/movies/6003bb75d1158f706ee3418</td>
+      <td>
+        { <br>
+          "FavoriteMovies": [ <br>
+            "6003bb75d1158f706ee3418" <br>
+          ], <br>
+          "_id": "600b1d196b5138008f8f3491", <br>
+          "Username": "crocodile", <br>
+          "Password": "test123", <br>
+          "Email": "crocs@gmail.com", <br>
+          "Birthday": "2001-12-12T00:00:00.000Z", <br>
+          "__v": 0 <br>
+        }
+      </td>
     </tr>
 
     <tr>
       <td>Allow users to remove a movie from their list of favorites</td>
-      <td>/users/:username/movies/:movieID</td>
+      <td>/users/:Username/movies/:MovieID</td>
       <td>DELETE</td>
       <td>None</td>
       <td>
-        A text message indicating whether the movie was successfully removed
+        JSON object with updated user info
       </td>
-      <td>/users/natmertens/movies/1</td>
-      <td>'Movie was successfully removed'</td>
+      <td>/users/crocodile/movies/6003bb75d1158f706ee3418</td>
+      <td>
+        { <br>
+          "FavoriteMovies": [], <br>
+          "_id": "600b1d196b5138008f8f3491", <br>
+          "Username": "crocodile", <br>
+          "Password": "test123", <br>
+          "Email": "crocs@gmail.com", <br>
+          "Birthday": "2001-12-12T00:00:00.000Z", <br>
+          "__v": 0 <br>
+        }
+      </td>
     </tr>
 
     <tr>
       <td>Allow existing users to deregister</td>
-      <td>/users/:username</td>
+      <td>/users/:Username</td>
       <td>DELETE</td>
       <td>None</td>
       <td>
-        A text message indicating whether the user has successfully deregistered
+        Text message indicating whether the user has successfully deregistered
       </td>
-      <td>/users/natmertens</td>
-      <td>'You have successfully deregisterd'</td>
+      <td>/users/crocodile</td>
+      <td>'crocodile was deleted'</td>
     </tr>
 
   </table>
