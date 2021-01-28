@@ -24,7 +24,8 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
+//mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(morgan('common'));
 
@@ -49,7 +50,7 @@ app.get('/', (req, res) => {
 app.get('/movies/:Title', passport.authenticate('jwt', {session: false}), (req, res) => {
   Movies.findOne({Title: req.params.Title})
     .then((movie) => {
-      res.json(movie);
+      res.status(201).json(movie);
     })
     .catch((err) => {
       console.error(err);
@@ -61,7 +62,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', {session: false}), (req, 
 app.get('/movies/genres/:Name', passport.authenticate('jwt', {session: false}), (req, res) => {
   Movies.findOne({'Genre.Name': req.params.Name})
     .then((genre) => {
-      res.json(genre.Genre);
+      res.status(201).json(genre.Genre);
     })
     .catch((err) => {
       console.error(err);
@@ -74,7 +75,7 @@ app.get('/movies/genres/:Name', passport.authenticate('jwt', {session: false}), 
 app.get('/movies/directors/:Name', passport.authenticate('jwt', {session: false}), (req, res) => {
   Movies.findOne({'Director.Name': req.params.Name})
     .then((director) => {
-      res.json(director.Director);
+      res.status(201).json(director.Director);
     })
     .catch((err) => {
       console.error(err);
