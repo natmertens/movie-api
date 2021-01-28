@@ -116,12 +116,12 @@ app.post('/users',
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
-          .then((user) => { res.status(201).json(user) })
-          .catch((err) => {
-          console.error(err);
-          res.status(500).send('Error: ' + err);
-        });
-      }
+            .then((user) => { res.status(201).json(user) })
+            .catch((err) => {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            });
+        }
     })
     .catch((err) => {
       console.error(err);
@@ -188,7 +188,7 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {ses
      $pull: { FavoriteMovies: req.params.MovieID }
    },
    { new: true },
-  (err, updatedUser) => {
+   (err, updatedUser) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error: ' + err);
