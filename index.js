@@ -1,23 +1,14 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
   morgan = require('morgan');
-
 const app = express();
-
 const cors = require('cors');
-
 app.use(cors());
-
 app.use(bodyParser.json());
-
 let auth = require('./auth.js')(app);
-
 const passport = require('passport');
 require('./passport.js');
-
 const {check, validationResult} = require('express-validator');
-
-
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
@@ -102,11 +93,10 @@ app.post('/users',
   }
 
   let hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOne({ Username: req.body.Username })
   //Search to see if a user with the request body username already exists
+  Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        //If the user is found, send a message that it already exists
         return res.status(400).send(req.body.Username + ' already exists');
       } else {
         Users
@@ -139,7 +129,6 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}),
   check('Email', 'Email does not appear to be valid').isEmail()
 ],
 (req, res) => {
-
   //check validation object for errors
   let errors = validationResult(req);
 
