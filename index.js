@@ -88,7 +88,7 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', {session: false}
 });
 
 app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
-  Users.findOne({Username: req.body.Username} )
+  Users.findOne({Username: req.params.Username} )
     .then((user) => {
       res.status(201).json(user);
     })
