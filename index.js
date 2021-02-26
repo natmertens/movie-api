@@ -1,18 +1,23 @@
 const express = require('express'),
-  bodyParser = require('body-parser'),
-  morgan = require('morgan'),
-  mongoose = require('mongoose');
+      bodyParser = require('body-parser'),
+      morgan = require('morgan'),
+      mongoose = require('mongoose');
 const app = express();
-const cors = require('cors');
-app.use(bodyParser.json());
 let auth = require('./auth.js')(app);
 const passport = require('passport');
+
+const Models = require('./models.js');
+const Movies = Models.Movie;
+const Users = Models.User;
+
 require('./passport.js');
 const {check, validationResult} = require('express-validator');
 
 let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', '*'];
+var cors = require('cors')
 
 app.use(cors())
+app.use(bodyParser.json());
 // app.use(cors({
 //   origin: (origin, callback) => {
 //     if(!origin) return callback(null, true);
@@ -24,15 +29,17 @@ app.use(cors())
 //   }
 // }));
 
-const Models = require('./models.js');
-
-const Movies = Models.Movie;
-const Users = Models.User;
+require('dotenv').config()
 
 app.use(morgan('common'));
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(suc => {
+      console.log("suc")
+    }).catch(er => {
+      console.log(er)
+})
 
 //Get a list of all movies
 app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -228,12 +235,12 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), (
     });
 });
 
-app.use(express.static('public'));
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
+// app.use(express.static('public'));
+//
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).send('Something broke!');
+// });
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
