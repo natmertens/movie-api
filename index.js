@@ -1,16 +1,43 @@
 const express = require('express'),
-  bodyParser = require('body-parser'),
-  morgan = require('morgan'),
-  mongoose = require('mongoose');
+      bodyParser = require('body-parser'),
+      morgan = require('morgan'),
+      mongoose = require('mongoose');
 const app = express();
-const cors = require('cors');
-app.use(bodyParser.json());
-let auth = require('./auth.js')(app);
+// let auth = require('./auth.js')(app);
 const passport = require('passport');
+require('dotenv').config()
+const Models = require('./models.js');
+const Movies = Models.Movie;
+const Users = Models.User;
+
 require('./passport.js');
 const {check, validationResult} = require('express-validator');
 
 let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234'];
+var cors = require('cors')
+
+
+const jwtSecret = 'your_jwt_secret';
+
+
+const jwt = require('jsonwebtoken')
+
+let generateJWTToken = (user) => {
+  return jwt.sign(user, jwtSecret, {
+    subject: user.Username, expiresIn: '7d', algorithm: 'HS256'
+  });
+}
+
+//mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(suc => {
+      console.log("suc")
+    }).catch(er => {
+  console.log(er)
+})
+
+
+// app.use(cors())
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -22,16 +49,11 @@ app.use(cors({
     return callback(null, true);
   }
 }));
+app.use(express.json());
 
-const Models = require('./models.js');
-
-const Movies = Models.Movie;
-const Users = Models.User;
 
 app.use(morgan('common'));
 
-//mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 //Get a list of all movies
 app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -227,6 +249,28 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), (
       console.error(err);
       res.status(500).send('Error: ' + err);
     });
+});
+
+app.post('/login', (req, res) => {
+  // console.log("req:",req.body)
+  passport.authenticate('local', { session: false }, (error, user, info) => {
+    if (error || !user) {
+      console.log("error",error)
+      console.log("user",user)
+      console.log("info", info)
+      return res.status(400).json({
+        message: 'Something is not right',
+        user: user
+      });
+    }
+    req.login(user, { session: false }, (error) => {
+      if (error) {
+        res.send(error);
+      }
+      let token = generateJWTToken(user.toJSON());
+      return res.json({ user, token });
+    });
+  })(req, res);
 });
 
 app.use(express.static('public'));
